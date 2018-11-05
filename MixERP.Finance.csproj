@@ -27,9 +27,8 @@
     <Use64BitIISExpress />
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -176,22 +175,25 @@
     <Compile Include="Controllers\Backend\Setup\CurrencyController.cs" />
     <Compile Include="Controllers\Backend\Setup\FiscalYearController.cs" />
     <Compile Include="Controllers\Backend\Setup\FrequencySetupController.cs" />
+    <Compile Include="Controllers\Backend\Tasks\ConsoleController.cs" />
     <Compile Include="Controllers\Backend\Tasks\AccountReconciliationController.cs" />
     <Compile Include="Controllers\Backend\Tasks\AutoVerificationPolicyController.cs" />
     <Compile Include="Controllers\Backend\Tasks\BaseVerificationController.cs" />
-    <Compile Include="Controllers\Backend\Tasks\ConsoleController.cs" />
     <Compile Include="Controllers\Backend\Tasks\EodProcessingController.cs" />
     <Compile Include="Controllers\Backend\Tasks\ExchangeRateController.cs" />
     <Compile Include="Controllers\Backend\Tasks\ImportTransactionsController.cs" />
     <Compile Include="Controllers\Backend\Tasks\JournalEntryController.cs" />
     <Compile Include="Controllers\Backend\Tasks\JournalVerificationController.cs" />
     <Compile Include="Controllers\Backend\Tasks\RefreshMaterializedViewsController.cs" />
+    <Compile Include="Controllers\Backend\Tasks\TrialBalanceController.cs" />
+    <Compile Include="Controllers\Backend\Tasks\VerificationPolicyController.cs" />
     <Compile Include="DAL\CashFlowStatement.cs" />
     <Compile Include="DAL\CashFlow\IProfitLoss.cs" />
     <Compile Include="DAL\CashFlow\PostgreSQL.cs" />
     <Compile Include="DAL\CashFlow\SqlServer.cs" />
     <Compile Include="DAL\ProfitLoss\IProfitLoss.cs" />
     <Compile Include="DAL\RefreshMaterializedViews.cs" />
+    <Compile Include="DAL\TrialBalanceTree.cs" />
     <Compile Include="I18N.cs" />
     <Compile Include="Models\JournalEntries.cs" />
     <Compile Include="PartialViewModels\Document.cs" />
@@ -205,7 +207,6 @@
     <Compile Include="DTO\TransactionVerificationStatusView.cs" />
     <Compile Include="Models\JournalWithadrawals.cs" />
     <Compile Include="Controllers\Backend\Tasks\JournalWithdrawalController.cs" />
-    <Compile Include="Controllers\Backend\Tasks\VerificationPolicyController.cs" />
     <Compile Include="Controllers\FinanceDashboardController.cs" />
     <Compile Include="CustomJavascriptVariable.cs" />
     <Compile Include="DAL\Accounts.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryModels\AccountStatementQueryModel.cs" />
     <Compile Include="QueryModels\JournalViewQuery.cs" />
+    <Compile Include="QueryModels\TrialBalanceQuery.cs" />
     <Compile Include="Routines\DayEndRoutine.cs" />
     <Compile Include="Routines\IDayEndRoutine.cs" />
     <Compile Include="ViewModels\Document.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="ViewModels\JournalDetail.cs" />
     <Compile Include="ViewModels\ReconciliationViewModel.cs" />
     <Compile Include="ViewModels\TransactionPosting.cs" />
+    <Compile Include="ViewModels\TrialBalanceTreeViewModel.cs" />
     <Compile Include="ViewModels\Verification.cs" />
     <Compile Include="ViewModels\WithdrawalViewModel.cs" />
   </ItemGroup>
@@ -255,6 +258,20 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reports\AccountStatement.SqlServer.xml" />
+    <Content Include="Reports\AccountStatement.xml" />
+    <Content Include="Reports\BalanceSheet.SqlServer.xml" />
+    <Content Include="Reports\BalanceSheet.xml" />
+    <Content Include="Reports\ExchangeRates.SqlServer.xml" />
+    <Content Include="Reports\ExchangeRates.xml" />
+    <Content Include="Reports\JournalEntry.SqlServer.xml" />
+    <Content Include="Reports\JournalEntry.xml" />
+    <Content Include="Reports\RetainedEarnings.SqlServer.xml" />
+    <Content Include="Reports\RetainedEarnings.xml" />
+    <Content Include="Reports\TransactionSummary.SqlServer.xml" />
+    <Content Include="Reports\TransactionSummary.xml" />
+    <Content Include="Reports\TrialBalance.SqlServer.xml" />
+    <Content Include="Reports\TrialBalance.xml" />
     <Content Include="scripts\jquery.signalR-2.2.1.js" />
     <Content Include="scripts\jquery.signalR-2.2.1.min.js" />
     <Content Include="Views\web.config" />
@@ -333,7 +350,7 @@
     <Error Condition="!Exists('packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v15.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v14.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
